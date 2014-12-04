@@ -1,6 +1,8 @@
+import java.util.Random;
 public class CreditCard
 {
-  public String generateCard (int type) {
+  public String generateCard () {
+    Random q = new Random (); // needed
     int numdigits = 13 + (int)(Math.random()*4); //number of digits in the credit card, 13-16
     int sum = 0; // the sum to be checked to see if divisible by 10
     String result = ""; //the string that will be returned by piecing together the array below
@@ -10,27 +12,18 @@ public class CreditCard
     }
     
     //valid starting digits
-    if (type == 1) {//if Master Card
-      card[0] = 5; //first digit is 5
+    int[] firstdigit = {3, 4, 5, 6}; //all possible beginning numbers
+    card[0] = firstdigit[q.nextInt(firstdigit.length)]; //makes the first digit
+    if (card[0] == 5) //if Master Card
       card[1] = (int)(Math.random()*5) + 1; // makes the second digit randomly from 1-5
-    }
-    if (type == 2) { // if Visa
-      card[0] = 4;
-    }
-    if (type == 3) { //if American Express
-      card[0] = 3;
-      card[1] = 4 + 3*(int)(Math.random() * 2); // 4 or 7
-    }
-    if (type == 4) { // if Discover
-      card[0] = 6; 
+    if (card[0] == 6) { //if Discover
       card[1] = 0;
       card[2] = 1;
       card[3] = 1; //since first four digits are 6011
     }
-    if (type == 5) { // if Diner's Card / Carte Blanche
-      card[0] = 3;
-      int[] seconddigit = {0, 6, 8}; //all possible second numbers if first digit is 3
-      card[1] = seconddigit[(int)(Math.random() * 3)]; //makes the second digit
+    if (card[0] == 3) { // if starting with 5
+      int[] seconddigit = {0, 4, 6, 7, 8}; //all possible second numbers if first digit is 3
+      card[1] = seconddigit[q.nextInt(seconddigit.length)]; //makes the second digit
       if (card[1] == 0)
         card[2] = (int)(Math.random()*5) + 1; // makes the third digit randomly from 1-5
     }
